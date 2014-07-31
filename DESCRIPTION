@@ -2,11 +2,12 @@ Package: scanimage
 Title: read and analyse 2 photon images from ScanImage
 Version: 0.1
 Authors@R: "Gregory Jefferis <jefferis@gmail.com> [aut, cre]"
-Description: What the package does (paragraph)
+Description: reads TIFF files written by ScanImage (http://scanimage.org)
 Depends:
     R (>= 3.1.0),
     tiff,
     stringr
-License: GPL
+License: GPL-2 | GPL-3
 LazyData: true
-Suggests: testthat
+Suggests:
+    testthat
