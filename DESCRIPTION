@@ -9,3 +9,4 @@ Depends:
     stringr
 License: GPL
 LazyData: true
+Suggests: testthat
