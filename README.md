@@ -1,5 +1,7 @@
 # scanimage
-An R package to read and analyse image data acquired usinng the ScanImage. This 
+[![Build Status](https://travis-ci.org/jefferis/scanimage.svg)](https://travis-ci.org/jefferis/scanimage)
+
+An R package to read and analyse image data acquired using ScanImage. This 
 will typically be multiphoton imaging for neurobiological experiments.
 See [http://scanimage.org] for details of this software.
 
