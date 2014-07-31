@@ -26,5 +26,9 @@ ScanImage TIFF flies contain a single description field, which is a
 \examples{
 desc=parse_description(system.file(
   'extdata/Blank-IPA_1s_16r_032.tif',package='scanimage'))
+desc$state.configName
+# [1] "ajdm_piezo"
+desc$state.acq.frameRate
+# [1] 8.138021 (Hz)
 }
 

@@ -38,6 +38,10 @@ read.scanimage<-function(source, slices=Inf, channels=Inf, info=T, ...){
 #' @examples
 #' desc=parse_description(system.file(
 #'   'extdata/Blank-IPA_1s_16r_032.tif',package='scanimage'))
+#' desc$state.configName
+#' # [1] "ajdm_piezo"
+#' desc$state.acq.frameRate
+#' # [1] 8.138021 (Hz)
 parse_description<-function(x, raw=FALSE){
   if(is.character(x)) x=read.scanimage(x, slices=1)
   desc=attr(x, 'description')
