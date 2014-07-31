@@ -5,7 +5,6 @@ Authors@R: "Gregory Jefferis <jefferis@gmail.com> [aut, cre]"
 Description: What the package does (paragraph)
 Depends:
     R (>= 3.1.0),
-    nat,
     tiff,
     stringr
 License: GPL
