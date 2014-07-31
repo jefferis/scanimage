@@ -2,7 +2,10 @@ Package: scanimage
 Title: read and analyse 2 photon images from ScanImage
 Version: 0.1
 Authors@R: "Gregory Jefferis <jefferis@gmail.com> [aut, cre]"
-Description: reads TIFF files written by ScanImage (http://scanimage.org)
+Description: An R package to read and analyse image data acquired using the
+    ScanImage software. This will typically be multiphoton imaging for
+    neurobiological experiments. See http://scanimage.org for details of this
+    software.
 Depends:
     R (>= 3.1.0),
     tiff,
