@@ -3,7 +3,7 @@
 
 An R package to read and analyse image data acquired using ScanImage. This 
 will typically be multiphoton imaging for neurobiological experiments.
-See [http://scanimage.org] for details of this software.
+See [scanimage.org](http://scanimage.org) for details of this software.
 
 ## Installation
 Currently there isn't a released version on [CRAN](http://cran.r-project.org/) 
