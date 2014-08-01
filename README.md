@@ -10,6 +10,6 @@ Currently there isn't a released version on [CRAN](http://cran.r-project.org/)
 but you can install using devtools.
 
 ```r
-if(!require("devtools")) install.package("devtools")
+if(!require("devtools")) install.packages("devtools")
 devtools::install_github("jefferis/scanimage")
 ```
