@@ -1,0 +1,4 @@
+scanimage 0.1.1
+===============
+* give read.scanimage an as.is argument (actually to read tiff stacks saved by
+  cimg)
