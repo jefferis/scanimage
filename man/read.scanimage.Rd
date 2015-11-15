@@ -4,7 +4,8 @@
 \alias{read.scanimage}
 \title{Read scanimage tiffs into an R object}
 \usage{
-read.scanimage(source, slices = Inf, channels = Inf, info = T, ...)
+read.scanimage(source, slices = Inf, channels = Inf, info = T,
+  as.is = TRUE, ...)
 }
 \arguments{
 \item{source}{Either name of the file to read from or a raw vector
@@ -18,6 +19,10 @@ slices)}
 
 \item{info}{if set to \code{TRUE} then the resulting image(s) will also
 contain information from TIFF tags as attributes}
+
+\item{as.is}{Return original pixel values without rescaling where possible.
+This is usually what you want for 8 and 16 bit scanimage TIFFs (default
+\code{TRUE}).}
 
 \item{...}{additional arguments for \code{\link[tiff]{readTIFF}}.}
 }

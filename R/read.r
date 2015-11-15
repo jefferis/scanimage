@@ -8,6 +8,9 @@
 #'   (\code{channels=Inf}) implying read all channels is presently implemented.
 #' @param info if set to \code{TRUE} then the resulting image(s) will also
 #'   contain information from TIFF tags as attributes
+#' @param as.is Return original pixel values without rescaling where possible.
+#'   This is usually what you want for 8 and 16 bit scanimage TIFFs (default
+#'   \code{TRUE}).
 #' @param ... additional arguments for \code{\link[tiff]{readTIFF}}.
 #' @return An array of the dimensions height x width x channels. If there is
 #'   only one channel the result is a matrix. The values are integers.
@@ -15,11 +18,12 @@
 #' @export
 #' @examples
 #' t=read.scanimage(system.file('extdata/Blank-IPA_1s_16r_032.tif', package='scanimage'))
-read.scanimage<-function(source, slices=Inf, channels=Inf, info=T, ...){
+read.scanimage<-function(source, slices=Inf, channels=Inf, info=T, as.is=TRUE,
+                         ...){
   if(is.finite(channels)) stop("channel selection not yet implemented!")
   # set all = FALSE if we just want slice 1
   all = !(is.finite(slices) && length(slices)==1 && slices==1)
-  t=readTIFF(source, info=info, all=all, native=FALSE, as.is=TRUE, ...)
+  t=readTIFF(source, info=info, all=all, native=FALSE, as.is=as.is, ...)
   if(all && is.finite(slices)) t[slices] else t
 }
 
