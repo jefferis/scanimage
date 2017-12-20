@@ -5,9 +5,9 @@
 \alias{make_hyperstack_multifile}
 \title{Read one or more TIFFs into 4D hyperstack}
 \usage{
-make_hyperstack(x, zslices, timepoints, time.axis = 4)
+make_hyperstack(x, zslices, timepoints, time.axis = 4, ...)
 
-make_hyperstack_multifile(x, file.axis = 4)
+make_hyperstack_multifile(x, file.axis = 4, ...)
 }
 \arguments{
 \item{x}{Path to (one or more) TIFFs}
@@ -18,8 +18,11 @@ make_hyperstack_multifile(x, file.axis = 4)
 
 \item{time.axis}{Which axis will end up as the time axis in the output}
 
+\item{...}{Additional arguments passed to \code{make_hyperstack}, thence to
+\code{\link{read.any.tiff}} and eventually to \code{\link{read.scanimage}}.}
+
 \item{file.axis}{Which axis will end up as the file axis in the output when
-reading multiple files.}
+reading multiple files}
 }
 \value{
 a 4D array typically ordered x,y,z,t or x,y,t,file
