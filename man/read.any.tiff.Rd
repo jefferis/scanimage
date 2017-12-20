@@ -9,7 +9,8 @@ read.any.tiff(f, ...)
 \arguments{
 \item{f}{Path to TIFF}
 
-\item{...}{Additional arguments passed to \code{read.scanimage} or readTIFF}
+\item{...}{Additional arguments passed to \code{\link{read.scanimage}} or
+\code{\link[tiff]{readTIFF}}.}
 }
 \value{
 An array of the dimensions height x width x channels. If there is
