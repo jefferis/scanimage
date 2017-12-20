@@ -17,7 +17,7 @@
 #' @importFrom imager threshold as.cimg isoblur
 make_roi_from_mean <- function(x, blur=5, thr="95%", ...) {
   if(is.character(x)) {
-    x <- if(length(x)==1) make_hyperstack(x, ...) else make_hyperstack_multifile(x)
+    x <- if(length(x)==1) make_hyperstack(x, ...) else make_hyperstack_multifile(x, ...)
   }
   # make mean image
   mx=apply(x, 1:2, mean)
