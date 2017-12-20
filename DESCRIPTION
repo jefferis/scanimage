@@ -10,7 +10,8 @@ Depends:
     R (>= 3.1.0)
 Imports: tiff,
     stringr,
-    abind
+    abind,
+    imager
 License: GPL-2 | GPL-3
 LazyData: true
 Suggests:
