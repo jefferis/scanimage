@@ -57,3 +57,19 @@ parse_description<-function(x, raw=FALSE){
   lapply(keyvals, function(x) {t=try(eval(parse(text=x)), silent = T);
                                ifelse(inherits(t,'try-error'), x,t)})
 }
+
+
+#' Convenience function to read any TIFF image with attached information
+#'
+#' @param f Path to TIFF
+#' @param ... Additional arguments passed to \code{read.scanimage} or readTIFF
+#'
+#' @return An array of the dimensions height x width x channels. If there is
+#'   only one channel the result is a matrix. The values are integers.
+#' @export
+read.any.tiff<-function(f, ...){
+  x=read.scanimage(f, slices=1)
+  desc=attr(x,'description')
+  is_scanimage=!is.null(desc) && grepl("state.configPath", desc,fixed = TRUE)
+  if(is_scanimage) read.scanimage(f, ...) else tiff::readTIFF(f, all=T, info = T)
+}
