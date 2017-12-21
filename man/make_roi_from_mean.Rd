@@ -2,7 +2,7 @@
 % Please edit documentation in R/analysis.R
 \name{make_roi_from_mean}
 \alias{make_roi_from_mean}
-\title{Construct a mean image, blur and threshold to get}
+\title{Construct a mean image, blur and threshold to make an ROI for analysis}
 \usage{
 make_roi_from_mean(x, blur = 5, thr = "95\%", ...)
 }
@@ -21,7 +21,7 @@ make_roi_from_mean(x, blur = 5, thr = "95\%", ...)
 A 2D mask in the form of an imager::cimg object
 }
 \description{
-Construct a mean image, blur and threshold to get
+Construct a mean image, blur and threshold to make an ROI for analysis
 }
 \details{
 This is currently targeted at single plane imaging data.

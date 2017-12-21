@@ -1,4 +1,4 @@
-#' Construct a mean image, blur and threshold to get
+#' Construct a mean image, blur and threshold to make an ROI for analysis
 #'
 #' @details This is currently targeted at single plane imaging data.
 #'
