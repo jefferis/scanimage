@@ -3,28 +3,53 @@
 #' @param source Either name of the file to read from or a raw vector
 #'   representing the TIFF file content.
 #' @param slices Which slices to return (default of Inf reads all available
-#'   slices)
-#' @param channels which channels to read. FIXME only the default
-#'   (\code{channels=Inf}) implying read all channels is presently implemented.
+#'   slices). A slice is a single channel 2D TIFF image.
+#' @param frames Which frames to read (default of Inf reads all available
+#'   frames). A frame is one or more 2D TIFF images acquired simultaneously.
+#' @param channels which channels to read (default value of \code{Inf} implies
+#'   all channels).
 #' @param info if set to \code{TRUE} then the resulting image(s) will also
 #'   contain information from TIFF tags as attributes
 #' @param as.is Return original pixel values without rescaling where possible.
 #'   This is usually what you want for 8 and 16 bit scanimage TIFFs (default
 #'   \code{TRUE}).
 #' @param ... additional arguments for \code{\link[tiff]{readTIFF}}.
-#' @return An array of the dimensions height x width x channels. If there is
-#'   only one channel the result is a matrix. The values are integers.
+#' @return A list of 2D matrices (height x width) except for the special case
+#'   when the first slice has been requested.
 #' @importFrom tiff readTIFF
 #' @export
 #' @examples
 #' t=read.scanimage(system.file('extdata/Blank-IPA_1s_16r_032.tif', package='scanimage'))
-read.scanimage<-function(source, slices=Inf, channels=Inf, info=T, as.is=TRUE,
+read.scanimage<-function(source, slices=Inf, frames=Inf, channels=Inf, info=T, as.is=TRUE,
                          ...){
-  if(is.finite(channels)) stop("channel selection not yet implemented!")
   # set all = FALSE if we just want slice 1
   all = !(is.finite(slices) && length(slices)==1 && slices==1)
   t=readTIFF(source, info=info, all=all, native=FALSE, as.is=as.is, ...)
-  if(all && is.finite(slices)) t[slices] else t
+
+  # figure out which subset of slices we want
+  if(all(is.finite(frames)) || all(is.finite(channels))) {
+    pd=parse_description(t)
+    nchan=pd$state.acq.numberOfChannelsSave
+    nframes=pd$state.acq.numberOfFrames
+    if(nframes*nchan != length(t))
+      stop("Mismatch between reported number of frames/channels and the number",
+           " of raw slices read from TIFF")
+    allchannels=seq_len(nchan)
+    allframes=seq_len(nframes)
+    if(all(is.finite(channels))) {
+      if(!all(channels%in%allchannels)) stop("Bad channel number!")
+    } else channels <- allchannels
+    if(all(is.finite(frames))) {
+      if(!all(frames%in%allframes)) stop("Bad frame number!")
+    } else frames <- allframes
+    # set up an index matrix to help figure out which slices we want
+    # NB rows and columns
+    index_mat=matrix(FALSE, nrow=nchan, ncol = nframes)
+    index_mat[channels, frames]=T
+    slices=which(index_mat)
+  }
+
+  if(all && all(is.finite(slices))) t[slices] else t
 }
 
 #' parse description of ScanImage TIFF file, converting it to key-value list

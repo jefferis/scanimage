@@ -4,18 +4,21 @@
 \alias{read.scanimage}
 \title{Read scanimage tiffs into an R object}
 \usage{
-read.scanimage(source, slices = Inf, channels = Inf, info = T,
-  as.is = TRUE, ...)
+read.scanimage(source, slices = Inf, frames = Inf, channels = Inf,
+  info = T, as.is = TRUE, ...)
 }
 \arguments{
 \item{source}{Either name of the file to read from or a raw vector
 representing the TIFF file content.}
 
 \item{slices}{Which slices to return (default of Inf reads all available
-slices)}
+slices). A slice is a single channel 2D TIFF image.}
 
-\item{channels}{which channels to read. FIXME only the default
-(\code{channels=Inf}) implying read all channels is presently implemented.}
+\item{frames}{Which frames to read (default of Inf reads all available
+frames). A frame is one or more 2D TIFF images acquired simultaneously.}
+
+\item{channels}{which channels to read (default value of \code{Inf} implies
+all channels).}
 
 \item{info}{if set to \code{TRUE} then the resulting image(s) will also
 contain information from TIFF tags as attributes}
@@ -27,8 +30,8 @@ This is usually what you want for 8 and 16 bit scanimage TIFFs (default
 \item{...}{additional arguments for \code{\link[tiff]{readTIFF}}.}
 }
 \value{
-An array of the dimensions height x width x channels. If there is
-  only one channel the result is a matrix. The values are integers.
+A list of 2D matrices (height x width) except for the special case
+  when the first slice has been requested.
 }
 \description{
 Read scanimage tiffs into an R object

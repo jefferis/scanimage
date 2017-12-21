@@ -1,11 +1,17 @@
 context('read ScanImage TIFF')
 test_that("read a multipage TIFF",{
-  t=read.scanimage(system.file('extdata/Blank-IPA_1s_16r_032.tif',
-                               package='scanimage'))
+  img=system.file('extdata/Blank-IPA_1s_16r_032.tif', package='scanimage')
+  t=read.scanimage(img)
   expect_is(t,'list')
-  t1=read.scanimage(system.file('extdata/Blank-IPA_1s_16r_032.tif',
-                               package='scanimage'), slices = 1)
+  t1=read.scanimage(img, slices = 1)
+  t2=read.scanimage(img, frames = 1)
+  t3=read.scanimage(img, frames = 1, channels = 1)
+
   expect_is(t1,'matrix')
+  expect_equal(t1, t2[[1]])
+  expect_equal(t3, t2)
+  expect_error(read.scanimage(img, channels = 2))
+
 })
 
 test_that("parse TIFF description",{
