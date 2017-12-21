@@ -23,3 +23,10 @@ test_that("parse TIFF description",{
   expect_is(parse_description(imfile, raw = TRUE), 'character')
 
 })
+
+test_that("parse TIFF description",{
+  imfile=system.file('extdata/Blank-IPA_1s_16r_032.tif', package='scanimage')
+  d=scanimageinfo(imfile)
+  expect_is(d,'data.frame')
+  expect_equivalent(d[, 1:4], c(64L, 64L, 1L, 30L))
+})

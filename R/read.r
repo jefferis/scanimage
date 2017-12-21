@@ -28,14 +28,12 @@ read.scanimage<-function(source, slices=Inf, frames=Inf, channels=Inf, info=T, a
 
   # figure out which subset of slices we want
   if(all(is.finite(frames)) || all(is.finite(channels))) {
-    pd=parse_description(t)
-    nchan=pd$state.acq.numberOfChannelsSave
-    nframes=pd$state.acq.numberOfFrames
-    if(nframes*nchan != length(t))
+    si=scanimageinfo(t)
+    if(si$nframes*si$nchan != length(t))
       stop("Mismatch between reported number of frames/channels and the number",
            " of raw slices read from TIFF")
-    allchannels=seq_len(nchan)
-    allframes=seq_len(nframes)
+    allchannels=seq_len(si$nchan)
+    allframes=seq_len(si$nframes)
     if(all(is.finite(channels))) {
       if(!all(channels%in%allchannels)) stop("Bad channel number!")
     } else channels <- allchannels
@@ -44,7 +42,7 @@ read.scanimage<-function(source, slices=Inf, frames=Inf, channels=Inf, info=T, a
     } else frames <- allframes
     # set up an index matrix to help figure out which slices we want
     # NB rows and columns
-    index_mat=matrix(FALSE, nrow=nchan, ncol = nframes)
+    index_mat=matrix(FALSE, nrow=si$nchan, ncol = si$nframes)
     index_mat[channels, frames]=T
     slices=which(index_mat)
   }
@@ -74,7 +72,7 @@ read.scanimage<-function(source, slices=Inf, frames=Inf, channels=Inf, info=T, a
 #' desc$state.acq.frameRate
 #' # [1] 8.138021 (Hz)
 parse_description<-function(x, raw=FALSE){
-  if(is.character(x)) x=read.scanimage(x, slices=1)
+  if(is.character(x)) x=suppressWarnings(read.scanimage(x, slices=1))
   else if(is.list(x)) x=x[[1]]
   desc=attr(x, 'description')
   if(is.null(desc)) stop("No description!")
@@ -101,4 +99,45 @@ read.any.tiff<-function(f, ...){
   desc=attr(x,'description')
   is_scanimage=!is.null(desc) && grepl("state.configPath", desc,fixed = TRUE)
   if(is_scanimage) read.scanimage(f, ...) else tiff::readTIFF(f, all=T, info = T, ...)
+}
+
+
+#' Extract key image information from a scanimage TIFF
+#'
+#' @param x One or more paths to TIFFs or an R object containing a TIFF image
+#'
+#' @return A data.frame with one row for every TIFF image in \code{x} and
+#'   columns
+#'
+#'   \itemize{
+#'
+#'   \item h number of rows (aka scanimage lines)
+#'
+#'   \item w number of columns (aka scanimage pixels per line)
+#'
+#'   \item nchan number of image channels
+#'
+#'   \item nframes number of image frames (i.e. timepoints*Z slices)
+#'
+#'   }
+#' @export
+#' @seealso \code{\link{parse_description}}
+#' @examples
+#' img=system.file('extdata/Blank-IPA_1s_16r_032.tif', package='scanimage')
+#' scanimageinfo(img)
+scanimageinfo <- function(x) {
+  if(is.character(x) && length(x)>1) {
+    lli <- sapply(x, scanimageinfo, USE.NAMES = T, simplify = F)
+    return(do.call(rbind, lli))
+  }
+
+  pd = parse_description(x)
+
+  data.frame(
+    h = pd$state.acq.linesPerFrame,
+    w = pd$state.acq.pixelsPerLine,
+    nchan = pd$state.acq.numberOfChannelsSave,
+    nframes = pd$state.acq.numberOfFrames,
+    freq = pd$state.acq.frameRate
+  )
 }
