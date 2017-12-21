@@ -12,7 +12,8 @@ Imports: tiff,
     stringr,
     abind,
     imager,
-    stats
+    stats,
+    tidyr
 License: GPL-2 | GPL-3
 LazyData: true
 Suggests:
