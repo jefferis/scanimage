@@ -29,18 +29,45 @@ make_roi_from_mean <- function(x, blur=5, thr="95%", ...) {
 
 #' Construct a temporal profile of voxels within an ROI
 #'
+#' @details When the \code{baseline} frames are specified the result will be
+#'   normalised to have a mean value of 1.0 in this period.
+#'
+#'   When \code{freq=TRUE} or is passed a numeric value, the return type will be
+#'   a time series \code{\link[stats]{ts}} object. This can then be used in
+#'   plots or subjected to filtering etc.
+#'
 #' @param x A hyperstack with imaging data
 #' @param mask An ROI mask e.g. from \code{\link{make_roi_from_mean}}
+#' @param baseline Optionally specifies which samples are the baseline (see
+#'   details).
+#' @param freq Logical specifying whether to use frequency information in
+#'   attributes of \code{x} (default \code{TRUE}) or numeric value specifying
+#'   frequency directly. See details.
 #'
-#' @return A matrix with the third and fourth dimensions of \code{x}
+#' @return A matrix with the third and fourth dimensions of \code{x}, optionally
 #' @export
+#' @importFrom stats ts
 #'
-#' @seealso \code{\link{make_roi_from_mean}}
-t_profile <- function(x, mask=NULL) {
+#' @seealso \code{\link{make_roi_from_mean}}, \code{\link[stats]{ts}},
+#'   \code{\link[stats]{plot.ts}}
+t_profile <- function(x, mask=NULL, baseline=NULL, freq=TRUE) {
   if(!is.null(mask)) {
     x2=apply(x, 3:4, "[", mask)
   } else {
     x2=apply(x, 3:4, c)
   }
-  colMeans(x2)
+  cmx=colMeans(x2)
+  if(!is.null(baseline)) {
+    cmx=scale(cmx, center = F, scale = colMeans(cmx[baseline,,drop=F]))
+  }
+
+  if(isTRUE(freq)) freq=scanimageinfo(x)$freq
+  else if(isTRUE(!freq)) freq=NULL
+
+  if(!is.null(freq)){
+    ts(cmx, frequency = freq, start = 0)
+  } else {
+    cmx
+  }
 }
+
