@@ -117,3 +117,9 @@ gather_t_profile.list <- function(x, ...) {
 
 #' @export
 gather_t_profile.by <- gather_t_profile.list
+
+#' @importFrom graphics rect par
+#' @importFrom grDevices rgb
+stimrect <- function(x, col=rgb(1,0,0,0.3), border=NA, ...) {
+  rect(x[1], par("usr")[3], x[2], par("usr")[4], col = col, border=border, ...)
+}

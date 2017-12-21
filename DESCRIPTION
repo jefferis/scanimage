@@ -13,7 +13,9 @@ Imports: tiff,
     abind,
     imager,
     stats,
-    tidyr
+    tidyr,
+    graphics,
+    grDevices
 License: GPL-2 | GPL-3
 LazyData: true
 Suggests:
