@@ -1,0 +1,19 @@
+reference:
+  - title: Package Help
+    desc: ~
+    contents:
+    - "`scanimage`"
+  - title: Stacks
+    desc: Functions for reading in / reshaping image stacks
+    contents:
+    - '`read.any.tiff`'
+    - '`read.scanimage`'
+    - '`parse_description`'
+    - '`scanimageinfo`'
+    - '`make_hyperstack`'
+  - title: Analysis
+    desc: Functions for analysing Ca+2 imaging data
+    contents:
+    - '`make_roi_from_mean`'
+    - '`t_profile`'
+    - '`gather_t_profile`'
