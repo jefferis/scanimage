@@ -72,6 +72,7 @@ read.scanimage<-function(source, slices=Inf, frames=Inf, channels=Inf, info=T, a
 #' desc$state.acq.frameRate
 #' # [1] 8.138021 (Hz)
 parse_description<-function(x, raw=FALSE){
+  if(is.factor(x)) x=as.character(x)
   if(is.character(x)) x=suppressWarnings(read.scanimage(x, slices=1))
   else if(is.list(x)) x=x[[1]]
   desc=attr(x, 'description')
@@ -126,6 +127,7 @@ read.any.tiff<-function(f, ...){
 #' img=system.file('extdata/Blank-IPA_1s_16r_032.tif', package='scanimage')
 #' scanimageinfo(img)
 scanimageinfo <- function(x) {
+  if(is.factor(x)) x=as.character(x)
   if(is.character(x) && length(x)>1) {
     lli <- sapply(x, scanimageinfo, USE.NAMES = T, simplify = F)
     return(do.call(rbind, lli))

@@ -17,6 +17,7 @@
 #' @export
 #' @importFrom abind abind
 make_hyperstack<-function(x, zslices, timepoints, time.axis=4, ...){
+  if(is.factor(x)) x=as.character(x)
   if(is.character(x)) x=read.any.tiff(x, ...)
   if(missing(zslices)) zslices=length(x)/timepoints
   if(missing(timepoints)) timepoints=length(x)/zslices
