@@ -37,6 +37,6 @@ make_hyperstack<-function(x, zslices, timepoints, time.axis=4, ...){
 #' @rdname make_hyperstack
 #' @importFrom abind abind
 make_hyperstack_multifile <- function(x, file.axis=4, ...) {
-  ll=lapply(x, make_hyperstack, zslices=1, time.axis=setdiff(3:4, file.axis))
+  ll=lapply(x, make_hyperstack, zslices=1, time.axis=setdiff(3:4, file.axis), ...)
   abind(ll, along=file.axis)
 }
