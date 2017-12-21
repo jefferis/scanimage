@@ -31,7 +31,8 @@ read.scanimage<-function(source, slices=Inf, channels=Inf, info=T, as.is=TRUE,
 #'
 #' @details ScanImage TIFF flies contain a single description field, which is a
 #'   CR delimited values of the form \code{key=value}.
-#' @param x Path to a TIFF file or a raw data block
+#' @param x Path to a TIFF file, one or more slices returned by
+#'   \code{\link{read.scanimage}} or a raw data block.
 #' @param raw Whether to return the raw description field as a single string or
 #'   when \code{FALSE} (the default) to return it is as a list containing parsed
 #'   R data types.
@@ -39,6 +40,7 @@ read.scanimage<-function(source, slices=Inf, channels=Inf, info=T, as.is=TRUE,
 #'   length 1.
 #' @export
 #' @importFrom stringr str_split_fixed
+#' @seealso \code{\link{read.scanimage}}
 #' @examples
 #' desc=parse_description(system.file(
 #'   'extdata/Blank-IPA_1s_16r_032.tif',package='scanimage'))
@@ -48,6 +50,7 @@ read.scanimage<-function(source, slices=Inf, channels=Inf, info=T, as.is=TRUE,
 #' # [1] 8.138021 (Hz)
 parse_description<-function(x, raw=FALSE){
   if(is.character(x)) x=read.scanimage(x, slices=1)
+  else if(is.list(x)) x=x[[1]]
   desc=attr(x, 'description')
   if(is.null(desc)) stop("No description!")
   if(raw) return(desc)

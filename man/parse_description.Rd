@@ -7,7 +7,8 @@
 parse_description(x, raw = FALSE)
 }
 \arguments{
-\item{x}{Path to a TIFF file or a raw data block}
+\item{x}{Path to a TIFF file, one or more slices returned by
+\code{\link{read.scanimage}} or a raw data block.}
 
 \item{raw}{Whether to return the raw description field as a single string or
 when \code{FALSE} (the default) to return it is as a list containing parsed
@@ -31,4 +32,7 @@ desc$state.configName
 # [1] "ajdm_piezo"
 desc$state.acq.frameRate
 # [1] 8.138021 (Hz)
+}
+\seealso{
+\code{\link{read.scanimage}}
 }
