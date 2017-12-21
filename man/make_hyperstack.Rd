@@ -25,7 +25,7 @@ make_hyperstack_multifile(x, file.axis = 4, ...)
 reading multiple files}
 }
 \value{
-a 4D array typically ordered x,y,z,t or x,y,t,file
+a 4D array typically ordered x,y,z,t or x,y,t,file.
 }
 \description{
 \code{make_hyperstack} reads a single TIFF which may have 3-4
@@ -34,4 +34,10 @@ a 4D array typically ordered x,y,z,t or x,y,t,file
 \code{make_hyperstack_multifile} reads multiple TIFFs each of
   which will have 2-3 dimensions (usually x,y,t) and combines into a single
   hyperstack x,y,t,file
+}
+\details{
+Where possible the hyperstack will include the \code{description}
+  attribute from the original scanimage file. This can be used with
+  \code{\link{scanimageinfo}} or \code{\link{parse_description}} to access
+  useful information about the underlying image.
 }
