@@ -4,7 +4,7 @@
 \alias{t_profile}
 \title{Construct a temporal profile of voxels within an ROI}
 \usage{
-t_profile(x, mask)
+t_profile(x, mask = NULL)
 }
 \arguments{
 \item{x}{A hyperstack with imaging data}

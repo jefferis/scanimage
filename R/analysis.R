@@ -36,6 +36,11 @@ make_roi_from_mean <- function(x, blur=5, thr="95%", ...) {
 #' @export
 #'
 #' @seealso \code{\link{make_roi_from_mean}}
-t_profile <- function(x, mask) {
-  colMeans(apply(x, 3:4, "[", mask))
+t_profile <- function(x, mask=NULL) {
+  if(!is.null(mask)) {
+    x2=apply(x, 3:4, "[", mask)
+  } else {
+    x2=apply(x, 3:4, c)
+  }
+  colMeans(x2)
 }
