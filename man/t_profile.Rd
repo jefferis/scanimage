@@ -4,19 +4,35 @@
 \alias{t_profile}
 \title{Construct a temporal profile of voxels within an ROI}
 \usage{
-t_profile(x, mask = NULL)
+t_profile(x, mask = NULL, baseline = NULL, freq = TRUE)
 }
 \arguments{
 \item{x}{A hyperstack with imaging data}
 
 \item{mask}{An ROI mask e.g. from \code{\link{make_roi_from_mean}}}
+
+\item{baseline}{Optionally specifies which samples are the baseline (see
+details).}
+
+\item{freq}{Logical specifying whether to use frequency information in
+attributes of \code{x} (default \code{TRUE}) or numeric value specifying
+frequency directly. See details.}
 }
 \value{
-A matrix with the third and fourth dimensions of \code{x}
+A matrix with the third and fourth dimensions of \code{x}, optionally
 }
 \description{
 Construct a temporal profile of voxels within an ROI
 }
+\details{
+When the \code{baseline} frames are specified the result will be
+  normalised to have a mean value of 1.0 in this period.
+
+  When \code{freq=TRUE} or is passed a numeric value, the return type will be
+  a time series \code{\link[stats]{ts}} object. This can then be used in
+  plots or subjected to filtering etc.
+}
 \seealso{
-\code{\link{make_roi_from_mean}}
+\code{\link{make_roi_from_mean}}, \code{\link[stats]{ts}},
+  \code{\link[stats]{plot.ts}}
 }
