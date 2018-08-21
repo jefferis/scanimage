@@ -1,5 +1,6 @@
 # scanimage
 [![Build Status](https://travis-ci.org/jefferis/scanimage.svg)](https://travis-ci.org/jefferis/scanimage)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://jefferis.github.io/scanimage)
 
 An R package to read and analyse image data acquired using ScanImage. This 
 will typically be multiphoton imaging for neurobiological experiments.
